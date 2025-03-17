@@ -1,31 +1,17 @@
-import asyncio
-import sys
-import os
+import streamlit as st
 
-async def main():
+def main():
+    # Display the question in the Streamlit app
+    st.title("Favorite Color Question")
+    st.write("What is your favorite color?")
 
-    q = "what is your favorite colour ? "
+    # Create a text input box for user input
+    color = st.text_input("Enter your favorite color:")
 
-    if sys.platform in ('emscripten','wasi'):
+    # Display the user's input
+    if color:
+        st.write(f"Your favorite color is: {color}")
 
-        if "PYGBAG" not in os.environ:
-            print("you need pygbag runtime for async input on terminal main thread")
-        else:
-            # import platform
-            # platform.window.set_raw_mode(1)
-
-            # if not using raw input, add EOT manually to flush prints
-            q += sys.__eot__
-
-            def goto_xy(x, y):
-                CSI(f"{y};{x}H")
-
-            CSI("2J")
-            goto_xy(1,10)
-            color = await input(q)
-    else:
-        color = input(q)
-
-    print(f" {color=} ")
-
-asyncio.run(main())
+# Run the main function when the app starts
+if __name__ == "__main__":
+    main()
